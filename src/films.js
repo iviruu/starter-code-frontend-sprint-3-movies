@@ -1,4 +1,4 @@
-const movies = require('../src/data');
+const movies = require('./data');
 
 // Exercise 1: Get the array of all directors.
 function getAllDirectors(movies) {
@@ -23,17 +23,37 @@ function moviesAverageOfDirector(movies, director) {
 }
 
 // Exercise 4:  Alphabetic order by title 
-function orderAlphabetically(array) {
-  
+function orderAlphabetically(movies) {
+  let result = movies.map(pelis => (pelis.title))
+  result.sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  let resultado20 = result.slice(0,20);
+  return resultado20;
 }
 
 // Exercise 5: Order by year, ascending
-function orderByYear() {
+function orderByYear(movies) {
+  let peliculas = [...movies];
+  peliculas.sort((a,b) =>{
+    if(a.year > b.year){
+      return 1;
+    }
+    if(a.year < b.year){
+      return -1;
+    }
+    return a.title.localeCompare(b.title);
+  });
+  return peliculas;
 
 }
 
 // Exercise 6: Calculate the average of the movies in a category
-function moviesAverageByCategory() {
+function moviesAverageByCategory(movies, genre) { 
+  let result = movies.filter(peli=> peli.genre .includes(genre));
+  let puntuacionTotal = result.reduce((total,peli) => total + peli.score,0);
+  let puntuacionMedia = result.length > 0 ? puntuacionTotal / result.length : 0;
+  let mediaRedondeada = parseFloat(puntuacionMedia.toFixed(2));
+  console.log("EXERCICE 6 ->", mediaRedondeada);
+  return mediaRedondeada ;
 
 }
 
