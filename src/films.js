@@ -18,7 +18,6 @@ function moviesAverageOfDirector(movies, director) {
   let puntuacionTotal = result.reduce((total,peli) => total + peli.score,0);
   let puntuacionMedia = result.length > 0 ? puntuacionTotal / result.length : 0;
   let mediaRedondeada = parseFloat(puntuacionMedia.toFixed(2));
-  console.log("EXERCICE 3 ->", mediaRedondeada);
   return mediaRedondeada ;
 }
 
@@ -52,18 +51,40 @@ function moviesAverageByCategory(movies, genre) {
   let puntuacionTotal = result.reduce((total,peli) => total + peli.score,0);
   let puntuacionMedia = result.length > 0 ? puntuacionTotal / result.length : 0;
   let mediaRedondeada = parseFloat(puntuacionMedia.toFixed(2));
-  console.log("EXERCICE 6 ->", mediaRedondeada);
   return mediaRedondeada ;
 
 }
 
 // Exercise 7: Modify the duration of movies to minutes
-function hoursToMinutes() {
+function convertirTiempoAMinutos(tiempo) {
+  const regex = /(?:(\d+)h\s*)?(?:(\d+)\s*min)?/;
+  const partes = tiempo.match(regex);
+  if (!partes) {
+    console.log("Formato no válido");
+    return 0; 
+  }
+  const horas = parseInt(partes[1], 10) || 0;;
+  const minutos = parseInt(partes[2], 10) || 0;;
+  return horas * 60 + minutos;
+}
+function hoursToMinutes(movies) {
+  const newMovies = movies.map(peli => ({
+    ...peli,
+    duration: convertirTiempoAMinutos(peli.duration)
+    }));
+    return newMovies
 
+  
 }
 
 // Exercise 8: Get the best film of a year
-function bestFilmOfYear() {
+function bestFilmOfYear(movies,year) {
+  let peliculas = movies.filter(peli=> peli.year === year);
+  peliculas.sort((a,b) => b.score - a.score);
+  const highestScore = peliculas.length > 0 ? peliculas[0].score : null;
+  const bestFilms = peliculas.filter(peli => peli.score === highestScore);
+
+  return bestFilms;
   
 }
 
